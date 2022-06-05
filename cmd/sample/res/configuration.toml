@@ -1,0 +1,46 @@
+[Writable]
+LogLevel = 'INFO'
+  [Writable.InsecureSecrets]
+    [Writable.InsecureSecrets.DB]
+    path = "redisdb"
+      [Writable.InsecureSecrets.DB.Secrets]
+      username = ""
+      password = ""
+
+[Service]
+HealthCheckInterval = '10s'
+Host = 'localhost'
+ServerBindAddr = '' # Leave blank so default to Host value unless different value is needed.
+Port = 59000
+MaxResultCount = 50000
+MaxRequestSize = 0
+StartupMsg = 'This is the Firmware Agent Microservice'
+RequestTimeout = '5s'
+
+[Registry]
+Host = 'localhost'
+Port = 8500
+Type = 'consul'
+
+[Clients]
+  [Clients.core-metadata]
+  Protocol = 'http'
+  Host = 'localhost'
+  Port = 59881
+
+  [Clients.core-data]
+  Protocol = 'http'
+  Host = 'localhost'
+  Port = 59880
+
+[SecretStore]
+Type = 'vault'
+Host = 'localhost'
+Port = 8200
+Path = 'edge-sdk-firmware-agent/'
+Protocol = 'http'
+RootCaCertPath = ''
+ServerName = ''
+TokenFile = '/tmp/edgex/secrets/edge-sdk-firmware-agent/secrets-token.json'
+  [SecretStore.Authentication]
+  AuthType = 'X-Vault-Token'
